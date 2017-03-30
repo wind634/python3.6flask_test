@@ -1,7 +1,7 @@
 from flask import Flask
 from app.extensions.database import db
 from app.extensions.login import login_manager
-from app.modules.user.urls import admin_user_blueprint
+from app.modules.user.views import admin_user_blueprint
 from config.config import config_settings
 
 ADMIN_BLUEPRINTS = (
