@@ -19,7 +19,13 @@ class User(db.Model, UserMixin):
         return False
     
     def get_id(self):
-        return self.id
+        try:
+            return text_type(self.id)
+        except AttributeError:
+            raise NotImplementedError('No `id` attribute - override `get_id`')
     
     def __repr__(self):
         return '<User %r>' % self.name
+    
+    
+text_type = str

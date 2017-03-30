@@ -24,8 +24,11 @@ def create_app(config_name):
                 static_folder='static')
     # 从配置文件中加载配置
     app.config.from_object(config_settings[config_name])
+    # 初始化配置
     config_settings[config_name].init_app(app)
+    # 初始化扩展
     configure_extensions(app)
+    # 初始化蓝图
     configure_admin_blueprints(app)
     
     if app.config.get("DEBUG"):

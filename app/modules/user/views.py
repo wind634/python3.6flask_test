@@ -1,6 +1,6 @@
 from flask import render_template
 from flask import request
-from flask_login import login_user
+from flask_login import login_user, current_user
 from app.modules.user.models import User
 from flask import Blueprint
 
@@ -17,7 +17,7 @@ def login_index():
 @admin_user_blueprint.route('/login', endpoint='login',  methods=['GET','POST'])
 def login():
     if request.method == "GET":
-        if User.is_authenticated:
+        if current_user.is_authenticated:
             return "已登录"
         else:
             return "未登录"
