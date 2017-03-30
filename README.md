@@ -14,3 +14,7 @@ flask搭建框架要点小计
 
 
 
+=======
+# python3.6flask_test
+python3.6下的flask框架的实践
+>>>>>>> 2c44682d764048fb5521808357ae7b53eb06dd7e
