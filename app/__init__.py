@@ -1,4 +1,6 @@
 from flask import Flask
+
+from app.extensions.babel import babel
 from app.extensions.database import db
 from app.extensions.login import login_manager
 from app.modules.user.views import admin_user_blueprint
@@ -42,3 +44,5 @@ def configure_extensions(app):
     db.init_app(app)
     # 初始化用户登录
     login_manager.init_app(app)
+    # 国际化
+    babel.init_app(app)
