@@ -1,6 +1,8 @@
 from flask import render_template
 from flask import request
 from flask_login import login_user, current_user
+
+from app.modules.user.forms import UserForm
 from app.modules.user.models import User
 from flask import Blueprint
 
@@ -11,7 +13,7 @@ admin_user_blueprint = Blueprint("admin_user", __name__)
 @admin_user_blueprint.route('/', endpoint='login_index')
 def login_index():
     
-    return render_template('index.html', locals())
+    return render_template('index.html')
 
 
 @admin_user_blueprint.route('/login', endpoint='login',  methods=['GET','POST'])
@@ -23,8 +25,15 @@ def login():
             return "未登录"
     else:
         # 获取post过来的参数
-        name = request.form.get('username')
-        password = request.form.get('password')
+        # 启用或禁用csrf保护
+        form = UserForm(csrf_enabled=False)
+        if form.validate_on_submit():
+            return "验证成功"
+        else:
+            print(form.errors)
+            return "验证失败"
+        # name = request.form.get('username')
+        # password = request.form.get('password')
     
         user = User.query.first()
         login_user(user)
