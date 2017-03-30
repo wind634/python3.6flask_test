@@ -17,9 +17,18 @@ flask搭建框架要点小计
     创建迁移文件 python manage.py db migrate -m "initial migration"
     执行迁移  python manage.py db upgrade
 7. flask国际化
-    Flask-Babel
+    Babel  lask-Babel
+
+    pybabel extract -F babel.cfg -o messages.pot .  / pybabel extract -F babel.cfg -k lazy_gettext -o messages.pot .
+    pybabel init -i messages.pot -d translations -l de
+    pybabel compile -d translations
+    # 更新
+    pybabel update -i messages.pot -d translations
 
 8. flask 部署方式总结
+    1.apache加mod_wsgi不推荐
+    2.使用 uwsgi+nginx来配置
+
 
 
 
