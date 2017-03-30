@@ -5,6 +5,7 @@ from flask_login import login_user, current_user
 from app.modules.user.forms import UserForm
 from app.modules.user.models import User
 from flask import Blueprint
+from flask_babel import gettext as _
 
 # 蓝图
 admin_user_blueprint = Blueprint("admin_user", __name__)
@@ -12,7 +13,8 @@ admin_user_blueprint = Blueprint("admin_user", __name__)
 
 @admin_user_blueprint.route('/', endpoint='login_index')
 def login_index():
-    
+    s = _("爱情")
+    print(s)
     return render_template('index.html')
 
 
