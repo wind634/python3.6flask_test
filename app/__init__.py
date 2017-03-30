@@ -32,7 +32,7 @@ def create_app(config_name):
     configure_extensions(app)
     # 初始化蓝图
     configure_admin_blueprints(app)
-    
+        
     if app.config.get("DEBUG"):
         # 允许跨域ajax请求
         app.after_request(_set_allow_origin)
@@ -45,4 +45,35 @@ def configure_extensions(app):
     # 初始化用户登录
     login_manager.init_app(app)
     # 国际化
+    config_babel(app)
+    
+
+def config_babel(app):
+    """
+    配置babel
+    :param app:
+    :return:
+    """
     babel.init_app(app)
+    
+    from flask import request, g
+    
+    @babel.localeselector
+    def get_locale():
+        # if a user is logged in, use the locale from the user settings
+        user = getattr(g, 'user', None)
+        if user is not None:
+            return user.locale
+        # otherwise try to guess the language from the user accept
+        # header the browser transmits.  We support de/fr/en in this
+        # example.  The best match wins.
+        # 根据浏览器头来判断返回
+        # return request.accept_languages.best_match(['de', 'fr', 'en'])
+        # return request.accept_languages.best_match(['zh_Hans_CN'])
+        return 'zh_Hans_CN'
+    
+    @babel.timezoneselector
+    def get_timezone():
+        user = getattr(g, 'user', None)
+        if user is not None:
+            return user.timezone

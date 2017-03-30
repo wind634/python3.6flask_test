@@ -25,6 +25,12 @@ flask搭建框架要点小计
     # 更新
     pybabel update -i messages.pot -d translations
 
+    # 修改语言后刷新
+    user.timezone = request.form['timezone']
+    user.locale = request.form['locale']
+    refresh()
+    flash(gettext('Language was changed'))
+
 8. flask 部署方式总结
     1.apache加mod_wsgi不推荐
     2.使用 uwsgi+nginx来配置
