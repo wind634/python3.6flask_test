@@ -32,9 +32,17 @@ flask搭建框架要点小计
     flash(gettext('Language was changed'))
 
 8. flask 部署方式总结
-    1.apache加mod_wsgi不推荐
-    2.使用 uwsgi+nginx来配置
+    1. apache加mod_wsgi不推荐
+    2. 使用 uwsgi+nginx来配置
+    3. gunicorn + gevent
 
+    有代理存在的时候注意设置
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+    4. tornado
+
+9. 如何打python包
 
 
 
