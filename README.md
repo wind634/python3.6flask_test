@@ -7,8 +7,11 @@ flask搭建框架要点小计
     略
 4. PyMySQL代替 python-mysql
 5. 使用Flask-WTF
-    # 启用或禁用csrf保护
+    启用或禁用csrf保护
     form = UserForm(csrf_enabled=False)
 6. 使用Flask-Migrate
-    命令
+    命令 python manage.py db init 第一次使用时初始化
+    创建迁移文件 python manage.py db migrate -m "initial migration"
+    执行迁移  python manage.py db upgrade
+
 

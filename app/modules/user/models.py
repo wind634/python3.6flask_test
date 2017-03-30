@@ -8,6 +8,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(50))
     desc = db.Column(db.String(50))
+    sex = db.Column(db.String(10))
     
     def is_authenticated(self):
         return True
