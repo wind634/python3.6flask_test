@@ -7,11 +7,15 @@ class DevelopmentConfig(Config):
     DEBUG = True
 
     # 邮件相关
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
+    MAIL_SERVER = 'smtp.qq.com'
+    MAIL_PORT = 465
     MAIL_USE_TLS = True
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_USERNAME = "2911184332"
+    MAIL_PASSWORD = "odyhwfarrbzcdfhb"
+    
+    # MAIL_PASSWORD = "1991620wind634"
+    # MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+    # MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     # 邮件相关
 
     DATABASE_HOST = 'localhost'
