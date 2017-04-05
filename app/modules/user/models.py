@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 
-from app.extensions.database import db
+from app.extensions.database_ext import db
 
 
 class User(db.Model, UserMixin):

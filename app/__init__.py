@@ -1,6 +1,9 @@
 from flask import Flask
+from flask import flash
+from flask import redirect
+from flask import url_for
 
-from app.extensions.openid_ext import openid
+from app.extensions.openid_ext import oid
 from app.extensions.babel_ext import babel
 from app.extensions.cache_ext import cache
 from app.extensions.database_ext import db
@@ -86,7 +89,7 @@ def config_babel(app):
 
 
 def config_openid(app):
-    openid.init_app(app)
+    oid.init_app(app)
     
     @app.before_request
     def lookup_current_user():
@@ -94,3 +97,16 @@ def config_openid(app):
         if 'openid' in session:
             openid = session['openid']
             g.user = User.query.filter_by(openid=openid).first()
+    
+    @oid.after_login
+    def after_login(resp):
+        print("after_login...")
+        session['openid'] = resp.identity_url
+        user = User.query.filter_by(openid=resp.identity_url).first()
+        if user is not None:
+            flash(u'Successfully signed in')
+            g.user = user
+            return redirect(oid.get_next_url())
+        return redirect(url_for('create_profile', next=oid.get_next_url(),
+                                name=resp.fullname or resp.nickname,
+                                email=resp.email))

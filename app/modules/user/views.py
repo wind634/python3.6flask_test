@@ -1,7 +1,13 @@
+from flask import flash
+from flask import g
+from flask import redirect
 from flask import render_template
 from flask import request
+from flask import session
+from flask import url_for
 from flask_login import login_user, current_user
 
+from app import oid
 from app.modules.user.forms import UserForm
 from app.modules.user.models import User
 from flask import Blueprint
@@ -19,25 +25,53 @@ def login_index():
 
 
 @admin_user_blueprint.route('/login', endpoint='login',  methods=['GET', 'POST'])
+@oid.loginhandler
 def login():
+    if g.user is not None and g.user.is_authenticated():
+        return "用户已经登录"
+        # return redirect(oid.get_next_url())
+    form = UserForm(csrf_enabled=False)
+    if form.validate_on_submit():
+        session['remember_me'] = form.remember_me.data
+        return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
+    return render_template('login_success.html')
     
-    if request.method == "GET":
-        if current_user.is_authenticated:
-            return "已登录"
+    # if request.method == "GET":
+    #     if current_user.is_authenticated:
+    #         return "已登录"
+    #     else:
+    #         return "未登录"
+    # else:
+    #     # 获取post过来的参数
+    #     # 启用或禁用csrf保护
+    #     form = UserForm(csrf_enabled=False)
+    #     if form.validate_on_submit():
+    #         return "验证成功"
+    #     else:
+    #         print(form.errors)
+    #         return "验证失败"
+    #     # name = request.form.get('username')
+    #     # password = request.form.get('password')
+    #
+    #     user = User.query.first()
+    #     login_user(user)
+    #     return render_template('login_success.html')
+
+
+@admin_user_blueprint.route('/create-profile', methods=['GET', 'POST'])
+def create_profile():
+    if g.user is not None or 'openid' not in session:
+        return redirect(url_for('index'))
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        if not name:
+            flash(u'Error: you have to provide a name')
+        elif '@' not in email:
+            flash(u'Error: you have to enter a valid email address')
         else:
-            return "未登录"
-    else:
-        # 获取post过来的参数
-        # 启用或禁用csrf保护
-        form = UserForm(csrf_enabled=False)
-        if form.validate_on_submit():
-            return "验证成功"
-        else:
-            print(form.errors)
-            return "验证失败"
-        # name = request.form.get('username')
-        # password = request.form.get('password')
-    
-        user = User.query.first()
-        login_user(user)
-        return render_template('login_success.html')
+            flash(u'Profile successfully created')
+            # db_session.add(User(name, email, session['openid']))
+            # db_session.commit()
+            return redirect(oid.get_next_url())
+    return render_template('create_profile.html', next=oid.get_next_url())

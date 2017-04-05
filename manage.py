@@ -3,7 +3,7 @@
 from app import create_app
 from flask_script import Manager, Server
 from flask_migrate import Migrate, MigrateCommand
-from app.extensions.database import db
+from app.extensions.database_ext import db
 from app.modules.user.models import User
 
 

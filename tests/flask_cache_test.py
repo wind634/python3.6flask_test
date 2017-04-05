@@ -5,7 +5,7 @@ from flask_mail import Mail
 
 # app = Flask(__name__)
 from app import create_app
-from app.extensions.cache import cache
+from app.extensions.cache_ext import cache
 
 app = create_app('default')
 mail = Mail(app)
