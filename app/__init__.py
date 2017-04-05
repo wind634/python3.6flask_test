@@ -3,12 +3,15 @@ from flask import flash
 from flask import redirect
 from flask import request
 from flask import url_for
+from flask.ext.login import current_user
+from flask.ext.principal import identity_loaded, UserNeed, RoleNeed
 
 from app.extensions.openid_ext import oid
 from app.extensions.babel_ext import babel
 from app.extensions.cache_ext import cache
 from app.extensions.database_ext import db
 from app.extensions.login_ext import login_manager
+from app.extensions.principal_ext import principals
 from app.modules.user.models import User
 from app.modules.user.views import admin_user_blueprint
 from config.config import config_settings
@@ -59,6 +62,8 @@ def configure_extensions(app):
     cache.init_app(app)
     # openid
     # config_openid(app)
+    # 权限设置
+    config_principals(app)
 
 
 def config_babel(app):
@@ -113,3 +118,25 @@ def config_openid(app):
         return redirect(url_for('create_profile', next=oid.get_next_url(),
                                 name=resp.fullname or resp.nickname,
                                 email=resp.email))
+
+
+def config_principals(app):
+    principals.init_app(app)
+    
+    @identity_loaded.connect_via(app)
+    def on_identity_loaded(sender, identity):
+        """Change the role via add the Need object into Role.
+
+           Need the access the app object.
+        """
+        # Set the identity user object
+        identity.user = current_user
+
+        # Add the UserNeed to the identity user object
+        if hasattr(current_user, 'id'):
+            identity.provides.add(UserNeed(current_user.id))
+
+        # Add each role to the identity user object
+        if hasattr(current_user, 'roles'):
+            for role in current_user.roles:
+                identity.provides.add(RoleNeed(role.name))

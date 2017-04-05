@@ -75,10 +75,22 @@ flask搭建框架要点小计
     完成
 
 15. flask_openid的使用
-    另一种登录形式openid
+    另一种登录形式 openid
     
 16. flask_principal的使用
     flask权限控制
+
+    login_user(user)
+
+    identity_changed.send(
+        current_app._get_current_object(),
+        identity=Identity(user.id))
+
+    logout_user()
+
+    identity_changed.send(
+        current_app._get_current_object(),
+        identity=AnonymousIdentity())
 
 17. flask_uploads 上传文件
 
