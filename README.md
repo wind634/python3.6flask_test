@@ -87,7 +87,8 @@ flask搭建框架要点小计
         identity=Identity(user.id))
 
     logout_user()
-
+    for key in ('identity.name', 'identity.auth_type'):
+        session.pop(key, None)
     identity_changed.send(
         current_app._get_current_object(),
         identity=AnonymousIdentity())
