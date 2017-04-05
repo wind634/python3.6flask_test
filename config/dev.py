@@ -7,13 +7,25 @@ class DevelopmentConfig(Config):
     DEBUG = True
 
     # 邮件相关
-    MAIL_SERVER = 'smtp.qq.com'
-    MAIL_PORT = 465
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = "2911184332"
-    MAIL_PASSWORD = "odyhwfarrbzcdfhb"
-    
+    # QQ邮箱配置
+    # MAIL_SERVER = 'smtp.qq.com'
+    # MAIL_PORT = 25
+    # MAIL_USE_TLS = True
+    # MAIL_USE_SSL = False
+    # MAIL_USERNAME = "2911184332"
+    # MAIL_PASSWORD = "odyhwfarrbzcdfhb"
     # MAIL_PASSWORD = "1991620wind634"
+
+    # 163邮箱配置
+    MAIL_SERVER = 'smtp.163.com'
+    MAIL_PORT = 25
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    MAIL_USERNAME = "nichentianxia11@163.com"
+    MAIL_PASSWORD = "1991620wind634"
+
+    MAIL_DEFAULT_SENDER = "nichentianxia11@163.com"
+    
     # MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     # MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     # 邮件相关
