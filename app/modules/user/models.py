@@ -11,10 +11,12 @@ class User(db.Model, UserMixin):
     sex = db.Column(db.String(10))
     email = db.Column(db.String(120), unique=True)
     openid = db.Column(db.String(120), unique=True)
-    
-    def __init__(self, username, email):
-        self.username = username
-        self.email = email
+    nickname = db.Column(db.String(50))
+    fullname = db.Column(db.String(100))
+                                           
+    # def __init__(self, username, email):
+    #     self.username = username
+    #     self.email = email
     
     def is_authenticated(self):
         return True

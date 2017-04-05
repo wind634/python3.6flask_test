@@ -7,6 +7,7 @@ from flask import session
 from flask import url_for
 from flask_login import login_user, current_user
 
+from app import db
 from app import oid
 from app.modules.user.forms import UserForm
 from app.modules.user.models import User
@@ -72,8 +73,12 @@ def create_profile():
             flash(u'Error: you have to enter a valid email address')
         else:
             flash(u'Profile successfully created')
-            # db_session.add(User(name, email, session['openid']))
-            # db_session.commit()
+            user = User()
+            user.name = name
+            user.email = email
+            user.openid = session['openid']
+            db.session.add(user)
+            db.session.commit()
             return redirect(oid.get_next_url())
     return render_template('create_profile.html', next=oid.get_next_url())
 
