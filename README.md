@@ -94,6 +94,7 @@ flask搭建框架要点小计
         identity=AnonymousIdentity())
 
 17. flask_uploads 上传文件
+    略
 
 
 
