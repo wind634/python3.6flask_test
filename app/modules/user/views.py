@@ -21,21 +21,22 @@ admin_user_blueprint = Blueprint("admin_user", __name__)
 def login_index():
     s = _("爱情")
     print(s)
-    return render_template('index.html')
+    # return render_template('index.html')
+    return render_template('oid_index.html')
 
 
 @admin_user_blueprint.route('/login', endpoint='login',  methods=['GET', 'POST'])
 @oid.loginhandler
 def login():
-    if g.user is not None and g.user.is_authenticated():
-        return "用户已经登录"
-        # return redirect(oid.get_next_url())
-    form = UserForm(csrf_enabled=False)
-    if form.validate_on_submit():
-        session['remember_me'] = form.remember_me.data
-        return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
-    return render_template('login_success.html')
+    if g.user is not None:
+        return redirect(oid.get_next_url())
+    if request.method == 'POST':
+        openid = request.form.get('openid')
+        return oid.try_login(openid, ask_for=['nickname', 'email'], ask_for_optional=['fullname'])
+    # return render_template('login_success.html')
     
+    return render_template('oid_index.html', next=oid.get_next_url(),
+                               error=oid.fetch_error())
     # if request.method == "GET":
     #     if current_user.is_authenticated:
     #         return "已登录"
@@ -58,7 +59,7 @@ def login():
     #     return render_template('login_success.html')
 
 
-@admin_user_blueprint.route('/create-profile', methods=['GET', 'POST'])
+@admin_user_blueprint.route('/create-profile', methods=['GET', 'POST'], endpoint="create_profile")
 def create_profile():
     if g.user is not None or 'openid' not in session:
         return redirect(url_for('index'))
@@ -75,3 +76,10 @@ def create_profile():
             # db_session.commit()
             return redirect(oid.get_next_url())
     return render_template('create_profile.html', next=oid.get_next_url())
+
+
+@admin_user_blueprint.route('/logout')
+def logout():
+    session.pop('openid', None)
+    flash(u'You were signed out')
+    return redirect(oid.get_next_url())

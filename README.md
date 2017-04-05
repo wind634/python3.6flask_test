@@ -75,12 +75,13 @@ flask搭建框架要点小计
     完成
 
 15. flask_openid的使用
-    
+
     
 16. flask_principal的使用
+    flask权限控制
 
 17. flask_uploads 上传文件
-    
+
 
 
 

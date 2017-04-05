@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     desc = db.Column(db.String(50))
     sex = db.Column(db.String(10))
     email = db.Column(db.String(120), unique=True)
+    openid = db.Column(db.String(120), unique=True)
     
     def __init__(self, username, email):
         self.username = username
