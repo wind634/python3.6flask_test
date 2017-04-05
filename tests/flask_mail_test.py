@@ -13,8 +13,8 @@ from flask_mail import Message
 @app.route("/")
 def index():
     msg = Message("Hello",
-                  sender="from@example.com",
-                  recipients=["to@example.com"])
+                  sender="2911184332@qq.com",
+                  recipients=["2911184332@qq.com"])
     mail.send(msg)
     return "hello"
 

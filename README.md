@@ -48,7 +48,29 @@ flask搭建框架要点小计
     sudo python3.6 setup.py bdist_egg
 
 10. 如何编写flask插件
-     
+    略
+
+11. flask sql_chamely扩展学习
+    一对多关系:
+        多的一方:
+        category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+        category = db.relationship('Category',
+            backref=db.backref('posts', lazy='dynamic'))
+        多对多要新建表:
+
+    sqlchamely
+
+12. flask - restful
+    熟悉使用
+
+13. Flask-Mail
+    发邮件的扩展使用
+
+14. flask cache的使用
+    @cache.cached(timeout=50)
+
+
+
 
 
 

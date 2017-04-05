@@ -1,6 +1,7 @@
 from flask import Flask
 
 from app.extensions.babel import babel
+from app.extensions.cache import cache
 from app.extensions.database import db
 from app.extensions.login import login_manager
 from app.modules.user.views import admin_user_blueprint
@@ -46,6 +47,8 @@ def configure_extensions(app):
     login_manager.init_app(app)
     # 国际化
     config_babel(app)
+    # 缓存
+    cache.init_app(app)
     
 
 def config_babel(app):
