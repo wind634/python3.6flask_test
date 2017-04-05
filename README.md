@@ -65,11 +65,22 @@ flask搭建框架要点小计
 
 13. Flask-Mail
     发邮件的扩展使用
+    批量发送
+    异步发送
+    已完成
 
 14. flask cache的使用
     @cache.cached(timeout=50)
+    @cache.memoize(timeout=50)
+    完成
 
+15. flask_openid的使用
+    
 
+16. flask_principal的使用
+
+17. flask_uploads 上传文件
+    
 
 
 

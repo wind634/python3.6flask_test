@@ -18,8 +18,9 @@ def login_index():
     return render_template('index.html')
 
 
-@admin_user_blueprint.route('/login', endpoint='login',  methods=['GET','POST'])
+@admin_user_blueprint.route('/login', endpoint='login',  methods=['GET', 'POST'])
 def login():
+    
     if request.method == "GET":
         if current_user.is_authenticated:
             return "已登录"
