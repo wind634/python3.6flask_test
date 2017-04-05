@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import flash
 from flask import redirect
+from flask import request
 from flask import url_for
 
 from app.extensions.openid_ext import oid
@@ -14,7 +15,8 @@ from config.config import config_settings
 from flask import g, session
 
 ADMIN_BLUEPRINTS = (
-    (admin_user_blueprint, "/admin"),
+    # (admin_user_blueprint, "/admin"),
+    (admin_user_blueprint, "/"),
 )
 
 
@@ -56,7 +58,7 @@ def configure_extensions(app):
     # 缓存
     cache.init_app(app)
     # openid
-    config_openid(app)
+    # config_openid(app)
 
 
 def config_babel(app):
@@ -95,6 +97,7 @@ def config_openid(app):
     def lookup_current_user():
         g.user = None
         if 'openid' in session:
+            print("'openid' in session")
             openid = session['openid']
             g.user = User.query.filter_by(openid=openid).first()
     

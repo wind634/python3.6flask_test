@@ -22,18 +22,18 @@ admin_user_blueprint = Blueprint("admin_user", __name__)
 def login_index():
     s = _("爱情")
     print(s)
-    # return render_template('index.html')
-    return render_template('oid_index.html')
+    return render_template('index.html')
 
 
-@admin_user_blueprint.route('/login', endpoint='login',  methods=['GET', 'POST'])
+@admin_user_blueprint.route('login', endpoint='login',  methods=['GET', 'POST'])
 @oid.loginhandler
 def login():
     if g.user is not None:
         return redirect(oid.get_next_url())
     if request.method == 'POST':
         openid = request.form.get('openid')
-        return oid.try_login(openid, ask_for=['nickname', 'email'], ask_for_optional=['fullname'])
+        if openid:
+            return oid.try_login(openid, ask_for=['nickname', 'email'], ask_for_optional=['fullname'])
     # return render_template('login_success.html')
     
     return render_template('oid_index.html', next=oid.get_next_url(),
@@ -60,31 +60,31 @@ def login():
     #     return render_template('login_success.html')
 
 
-@admin_user_blueprint.route('/create-profile', methods=['GET', 'POST'], endpoint="create_profile")
-def create_profile():
-    if g.user is not None or 'openid' not in session:
-        return redirect(url_for('index'))
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        if not name:
-            flash(u'Error: you have to provide a name')
-        elif '@' not in email:
-            flash(u'Error: you have to enter a valid email address')
-        else:
-            flash(u'Profile successfully created')
-            user = User()
-            user.name = name
-            user.email = email
-            user.openid = session['openid']
-            db.session.add(user)
-            db.session.commit()
-            return redirect(oid.get_next_url())
-    return render_template('create_profile.html', next=oid.get_next_url())
-
-
-@admin_user_blueprint.route('/logout')
-def logout():
-    session.pop('openid', None)
-    flash(u'You were signed out')
-    return redirect(oid.get_next_url())
+# @admin_user_blueprint.route('/create-profile', methods=['GET', 'POST'], endpoint="create_profile")
+# def create_profile():
+#     if g.user is not None or 'openid' not in session:
+#         return redirect(url_for('index'))
+#     if request.method == 'POST':
+#         name = request.form['name']
+#         email = request.form['email']
+#         if not name:
+#             flash(u'Error: you have to provide a name')
+#         elif '@' not in email:
+#             flash(u'Error: you have to enter a valid email address')
+#         else:
+#             flash(u'Profile successfully created')
+#             user = User()
+#             user.name = name
+#             user.email = email
+#             user.openid = session['openid']
+#             db.session.add(user)
+#             db.session.commit()
+#             return redirect(oid.get_next_url())
+#     return render_template('create_profile.html', next=oid.get_next_url())
+#
+#
+# @admin_user_blueprint.route('/logout')
+# def logout():
+#     session.pop('openid', None)
+#     flash(u'You were signed out')
+#     return redirect(oid.get_next_url())
