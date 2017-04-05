@@ -7,3 +7,5 @@ PyMySQL==0.7.10
 Flask-Migrate==2.0.3
 Babel==2.4.0
 Flask-Babel==0.11.1
+Flask-RESTful==0.3.5
+Flask-Mail==0.9.1
