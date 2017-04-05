@@ -43,6 +43,13 @@ flask搭建框架要点小计
     4. tornado
 
 9. 如何打python包
+    完成
+    sudo python3.6 setup.py sdist
+    sudo python3.6 setup.py bdist_egg
+
+10. 如何编写flask插件
+     
+
 
 
 
