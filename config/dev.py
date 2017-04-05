@@ -5,12 +5,14 @@ from config.common import Config, basedir
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    
+
+    # 邮件相关
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    # 邮件相关
 
     DATABASE_HOST = 'localhost'
     DATABASE_PORT = 3306
@@ -21,3 +23,7 @@ class DevelopmentConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = 'mysql://' + DATABASE_USER + ':' + DATABASE_PWD + '@' + \
                               DATABASE_HOST + ':' + str(DATABASE_PORT) + '/' + DATABASE_NAME + '?charset=utf8'
+    
+    
+    
+    
