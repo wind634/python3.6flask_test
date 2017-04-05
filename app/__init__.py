@@ -1,11 +1,14 @@
 from flask import Flask
 
-from app.extensions.babel import babel
-from app.extensions.cache import cache
-from app.extensions.database import db
-from app.extensions.login import login_manager
+from app.extensions.openid_ext import openid
+from app.extensions.babel_ext import babel
+from app.extensions.cache_ext import cache
+from app.extensions.database_ext import db
+from app.extensions.login_ext import login_manager
+from app.modules.user.models import User
 from app.modules.user.views import admin_user_blueprint
 from config.config import config_settings
+from flask import g, session
 
 ADMIN_BLUEPRINTS = (
     (admin_user_blueprint, "/admin"),
@@ -49,7 +52,9 @@ def configure_extensions(app):
     config_babel(app)
     # 缓存
     cache.init_app(app)
-    
+    # openid
+    config_openid(app)
+
 
 def config_babel(app):
     """
@@ -58,8 +63,6 @@ def config_babel(app):
     :return:
     """
     babel.init_app(app)
-    
-    from flask import request, g
     
     @babel.localeselector
     def get_locale():
@@ -80,3 +83,14 @@ def config_babel(app):
         user = getattr(g, 'user', None)
         if user is not None:
             return user.timezone
+
+
+def config_openid(app):
+    openid.init_app(app)
+    
+    @app.before_request
+    def lookup_current_user():
+        g.user = None
+        if 'openid' in session:
+            openid = session['openid']
+            g.user = User.query.filter_by(openid=openid).first()
