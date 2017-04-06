@@ -94,9 +94,11 @@ flask搭建框架要点小计
         identity=AnonymousIdentity())
 
 17. flask_uploads 上传文件
-    
+    patch_request_class 限制上传文件大小
+    完成
 
-18. flask-admin
+18. flask-admin的使用
+
 
 19. abu.admin
 

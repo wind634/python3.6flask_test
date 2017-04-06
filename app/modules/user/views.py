@@ -21,14 +21,14 @@ from flask_babel import gettext as _
 admin_user_blueprint = Blueprint("admin_user", __name__)
 
 
-@admin_user_blueprint.route('/', endpoint='login_index')
+@admin_user_blueprint.route('/sss', endpoint='login_index')
 def login_index():
     s = _("爱情")
     print(s)
     return render_template('index.html')
 
 
-@admin_user_blueprint.route('login', endpoint='login',  methods=['GET', 'POST'])
+@admin_user_blueprint.route('/login', endpoint='login',  methods=['GET', 'POST'])
 @oid.loginhandler
 def login():
     if g.user is not None:

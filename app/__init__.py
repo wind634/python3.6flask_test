@@ -5,8 +5,9 @@ from flask import request
 from flask import url_for
 from flask_login import current_user
 from flask_principal import identity_loaded, UserNeed, RoleNeed
-from flask_uploads import configure_uploads, UploadSet
+from flask_uploads import configure_uploads, UploadSet, patch_request_class
 
+from app.extensions.admin_ext import admin
 from app.extensions.openid_ext import oid
 from app.extensions.babel_ext import babel
 from app.extensions.cache_ext import cache
@@ -66,9 +67,14 @@ def configure_extensions(app):
     # config_openid(app)
     # 权限设置
     config_principals(app)
+    
     # 配置上传插件
     configure_uploads(app, photos)
-    
+    # 限制上传文件大小 1 * 1024 * 1024 1M
+    # patch_request_class(app, 1 * 1024)
+    # 配置admin
+    admin.init_app(app)
+
 
 def config_babel(app):
     """
