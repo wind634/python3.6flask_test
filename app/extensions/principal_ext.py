@@ -1,4 +1,4 @@
-from flask.ext.principal import Principal, Permission, RoleNeed
+from flask_principal import Principal, Permission, RoleNeed
 
 
 # Create the Flask-Principal's instance

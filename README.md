@@ -94,9 +94,11 @@ flask搭建框架要点小计
         identity=AnonymousIdentity())
 
 17. flask_uploads 上传文件
-    略
+    
 
+18. flask-admin
 
+19. abu.admin
 
 
 

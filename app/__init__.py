@@ -3,8 +3,9 @@ from flask import flash
 from flask import redirect
 from flask import request
 from flask import url_for
-from flask.ext.login import current_user
-from flask.ext.principal import identity_loaded, UserNeed, RoleNeed
+from flask_login import current_user
+from flask_principal import identity_loaded, UserNeed, RoleNeed
+from flask_uploads import configure_uploads, UploadSet
 
 from app.extensions.openid_ext import oid
 from app.extensions.babel_ext import babel
@@ -12,14 +13,15 @@ from app.extensions.cache_ext import cache
 from app.extensions.database_ext import db
 from app.extensions.login_ext import login_manager
 from app.extensions.principal_ext import principals
+from app.extensions.uploads_ext import photos
 from app.modules.user.models import User
 from app.modules.user.views import admin_user_blueprint
 from config.config import config_settings
 from flask import g, session
 
 ADMIN_BLUEPRINTS = (
-    # (admin_user_blueprint, "/admin"),
-    (admin_user_blueprint, "/"),
+    (admin_user_blueprint, "/admin"),
+    # (admin_user_blueprint, "/"),
 )
 
 
@@ -64,7 +66,9 @@ def configure_extensions(app):
     # config_openid(app)
     # 权限设置
     config_principals(app)
-
+    # 配置上传插件
+    configure_uploads(app, photos)
+    
 
 def config_babel(app):
     """

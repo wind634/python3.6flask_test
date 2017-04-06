@@ -1,5 +1,7 @@
 import os
 
+from flask_uploads import IMAGES
+
 from config.common import Config, basedir
 
 
@@ -39,7 +41,10 @@ class DevelopmentConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = 'mysql://' + DATABASE_USER + ':' + DATABASE_PWD + '@' + \
                               DATABASE_HOST + ':' + str(DATABASE_PORT) + '/' + DATABASE_NAME + '?charset=utf8'
-    
-    
+
+    # ===== 上传相关配置 start =====
+    UPLOADED_PHOTO_DEST = os.path.dirname(os.path.abspath(__file__))
+    UPLOADED_PHOTO_ALLOW = IMAGES
+    # ===== 上传相关配置 end =====
     
     

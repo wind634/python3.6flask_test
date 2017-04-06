@@ -1,3 +1,4 @@
+from flask import abort
 from flask import flash
 from flask import g
 from flask import redirect
@@ -5,10 +6,12 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
+from flask_uploads import UploadSet
 from flask_login import login_user, current_user
 
 from app import db
 from app import oid
+from app import photos
 from app.modules.user.forms import UserForm
 from app.modules.user.models import User
 from flask import Blueprint
@@ -88,3 +91,24 @@ def login():
 #     session.pop('openid', None)
 #     flash(u'You were signed out')
 #     return redirect(oid.get_next_url())
+
+
+@admin_user_blueprint.route('/upload', methods=['GET', 'POST'], endpoint='upload')
+def upload():
+    if request.method == "GET":
+        return render_template('upload.html')
+    else:
+        if 'photo' in request.files:
+            filename = photos.save(request.files['photo'])
+            
+            flash("Photo saved.")
+            return redirect(url_for('admin_user.show', name=filename))
+        return "上传成功"
+
+
+@admin_user_blueprint.route('/photo/<name>')
+def show(name):
+    if name is None:
+        abort(404)
+    url = photos.url(name)
+    return render_template('show.html', url=url, name=name)
