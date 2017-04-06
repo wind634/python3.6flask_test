@@ -98,11 +98,11 @@ flask搭建框架要点小计
     完成
 
 18. flask-admin的使用
-
+    完成
 
 19. abu.admin
-
-
+        
+    
 
 
 

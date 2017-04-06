@@ -14,3 +14,4 @@ Flask-OpenID==1.2.5
 Flask-Principal==0.4.0
 Flask-Uploads==0.2.1
 Flask-Admin==1.5.0
+abu.admin==0.1.1
