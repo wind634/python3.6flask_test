@@ -101,7 +101,7 @@ flask搭建框架要点小计
     完成
 
 19. abu.admin
-        
+    不支持python3.6
     
 
 
