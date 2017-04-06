@@ -9,5 +9,13 @@ class Admin(Interface):
         return '0.0.1'
 
     def init(self, path):
-        with open(os.path.join(path, 'README'), 'w') as readme:
-            readme.write("abc")
+        print("init...")
+
+    def backup(self, path, backup_file):
+        print("backup...")
+
+    def restore(self, path, restore_file):
+        print("restore...")
+
+    def upgrade(self, path, old_version):
+        print("upgrade...")
