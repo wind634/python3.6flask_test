@@ -17,4 +17,9 @@ setup(
     keywords=("test", "egg"),
     platforms="Independant",
     url="",
+    entry_points="""
+     # -*- Entry points: -*-
+     [abu.admin]
+     flask_test = admin:Admin
+     """,
 )
