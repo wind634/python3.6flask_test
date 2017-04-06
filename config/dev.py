@@ -1,6 +1,6 @@
 import os
 
-from flask_uploads import IMAGES
+from flask_uploads import IMAGES, DOCUMENTS
 
 from config.common import Config, basedir
 
@@ -43,8 +43,10 @@ class DevelopmentConfig(Config):
                               DATABASE_HOST + ':' + str(DATABASE_PORT) + '/' + DATABASE_NAME + '?charset=utf8'
 
     # ===== 上传相关配置 start =====
-    UPLOADED_PHOTO_DEST = os.path.dirname(os.path.abspath(__file__))
+    UPLOADS_DEFAULT_DEST = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads")
+    UPLOADED_PHOTO_DEST = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads", "photos")
     UPLOADED_PHOTO_ALLOW = IMAGES
+    UPLOADED_PHOTO_DENY = DOCUMENTS
     # ===== 上传相关配置 end =====
     
     
