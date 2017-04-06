@@ -100,7 +100,6 @@ def upload():
     else:
         if 'photo' in request.files:
             filename = photos.save(request.files['photo'])
-            
             flash("Photo saved.")
             return redirect(url_for('admin_user.show', name=filename))
         return "上传成功"
