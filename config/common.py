@@ -15,6 +15,7 @@ class Config:
     
     @staticmethod
     def init_app(app):
+        print("aadasds")
         pass
 
 

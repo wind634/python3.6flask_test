@@ -9,9 +9,9 @@ from flask import url_for
 from flask_uploads import UploadSet
 from flask_login import login_user, current_user
 
-from app import db
-from app import oid
-from app import photos
+
+from app.extensions.openid_ext import oid
+from app.extensions.uploads_ext import photos
 from app.modules.user.forms import UserForm
 from app.modules.user.models import User
 from flask import Blueprint
