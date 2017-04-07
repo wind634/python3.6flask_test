@@ -17,8 +17,7 @@ from app.modules.user.models import User
 from flask import Blueprint
 from flask_babel import gettext as _
 
-# 蓝图
-admin_user_blueprint = Blueprint("admin_user", __name__)
+from . import admin_user_blueprint
 
 
 @admin_user_blueprint.route('/sss', endpoint='login_index')
