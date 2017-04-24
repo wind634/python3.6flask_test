@@ -1,8 +1,8 @@
 import random
 
 from flask import Flask, request
-from flask.ext.restful import Resource, Api
-from flask.ext.restful import reqparse,fields, marshal_with
+from flask_restful import Resource, Api
+from flask_restful import reqparse,fields, marshal_with
 
 app = Flask(__name__)
 api = Api(app)
